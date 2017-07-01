@@ -4,6 +4,7 @@ var bodyParser = require('body-parser');
 var expressValidator = require('express-validator');
 var qs = require('querystring');
 var auth = require('./src/auth.js');
+var search = require('./src/search.js');
 var request = require('request-promise');
 
 const PORT = (process.env.PORT || 8080);
@@ -55,23 +56,12 @@ app.get('/search', (req, res) => {
 
     req.sanitize('album').escape();
     req.sanitize('album').trim();
+    req.sanitize('artist').escape();
+    req.sanitize('artist').trim();
 
     auth.getSpotifyToken(process.env.SPOTIFY_CLIENT, process.env.SPOTIFY_SECRET, process.env.SPOTIFY_REFRESH)
-        .then((authRes) => {
-            const options = {
-                uri: 'https://api.spotify.com/v1/search',
-                qs: {
-                    'q': req.query.album,
-                    'type': 'album'
-                },
-                headers: {
-                    'Authorization': `Bearer ${authRes.access_token}`
-                },
-                json: true
-            }
-            return request.get(options);
-        })
-        .then(body => res.send(body))
+        .then(authRes => search.handleSearch(authRes))
+        .then(body => res.render('albums', {albums: body.albums.items}))
         .catch(err => console.log(err));
 });
  
