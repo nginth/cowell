@@ -1,0 +1,17 @@
+{
+  "name": "cowell",
+  "version": "1.0.0",
+  "description": "Find where you can stream music!",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "keywords": [
+    "music"
+  ],
+  "author": "Nick Ginther",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.15.3"
+  }
+}
