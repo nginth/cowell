@@ -9,7 +9,8 @@ app.set('view engine', 'pug');
 
 app.get('/', (req, res) => {
     auth.getSpotifyToken()
-        .then(res => console.log(res));
+        .then(res => console.log(res))
+        .catch(err => console.log(err));
 });
  
 app.listen(PORT, () => {

@@ -5,7 +5,7 @@ function getSpotifyToken() {
     const options = {
         'uri': 'https://accounts.spotify.com/authorize',
         'qs': {
-            'client_id': process.env.SPOTIFY_ID,
+            'client_id': process.env.SPOTIFY_CLIENT,
             'response_type': 'code',
             'redirect_uri': 'https://cowell.herokuapp.com/spotifycallback'
         }
