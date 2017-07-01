@@ -1,16 +1,19 @@
 'use strict';
 var request = require('request-promise');
 
-function getSpotifyToken() {
+function getSpotifyToken(client_id, client_secret, refresh_token) {
     const options = {
-        'uri': 'https://accounts.spotify.com/authorize',
-        'qs': {
-            'client_id': process.env.SPOTIFY_CLIENT,
-            'response_type': 'code',
-            'redirect_uri': 'https://cowell.herokuapp.com/spotifycallback'
-        }
+        uri: 'https://accounts.spotify.com/api/token',
+        form: {
+            'refresh_token': refresh_token,
+            'grant_type': 'refresh_token',
+        },
+        headers: {
+            'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64'))
+        },
+        json: true
     }
-    return request(options);
+    return request.post(options);
 }
 
 module.exports = {

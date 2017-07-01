@@ -3,4 +3,9 @@ html
         title= title
     body
         p click below pls
-        a (href='https://accounts.spotify.com/authorize')
+        a(href= loginUrl) login
+        p search below pls
+        form(action='/search' method='get')
+            label(for='album') album name
+            input(type='text' name='album')
+            input(type='submit' value='search')
