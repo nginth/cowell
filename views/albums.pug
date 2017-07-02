@@ -6,63 +6,29 @@ html
         include includes/navbar.pug
         div(class='container')
             div(class='row')
-                div(class='col-sm-4')
-                    h3 Spotify
-                    if spotify.albums.length < 1
-                        p #{albumName} is not available on Spotify
-                    else
-                        ul(class='list-group') 
-                            each album in spotify.albums
-                                li(class='list-group-item')
-                                    div(class='flex-column')
-                                        div
-                                            a(href=album.external_urls.spotify)
-                                                img(src=album.images[2].url width=album.images[2].width height=album.images[2].height)
-                                        div 
-                                            a(href=album.external_urls.spotify) #{album.name}
-                                        div artists: 
-                                            each artist, index in album.artists
-                                                if index > 0
-                                                    a(href=artist.external_urls.spotify). 
-                                                        , #{artist.name}
+                each api in apis
+                    div(class='col-sm-4')
+                        h3 #{api.apiName}
+                        if api.albums.length < 1
+                            p #{queryAlbumName} is not available on #{api.apiName}
+                        else
+                            ul(class='list-group')
+                                each album in api.albums
+                                    li(class='list-group-item')
+                                        div(class='flex-column')
+                                            div
+                                                a(href=fetchUrl(album, api.albumUrl, api.albumUrlPrefix, api.albumUrlSuffix))
+                                                    img(src=fetchUrl(album, api.imageUrl, api.imageUrlPrefix, api.imageUrlSuffix) width=api.imageWidth height=api.imageHeight)
+                                            div 
+                                                a(href=fetchUrl(album, api.albumUrl, api.albumUrlPrefix, api.albumUrlSuffix)) #{fetchFromObject(album, api.albumName)}
+                                            div artists:
+                                                if typeof api.artists !== 'undefined'
+                                                    each artist, index in fetchFromObject(album, api.artists)
+                                                        if index > 0
+                                                            a(href=fetchUrl(artist, api.artistUrl, artistUrlPrefix)). 
+                                                                , #{fetchFromObject(artist, api.artistName)}
+                                                        else
+                                                            a(href=fetchUrl(artist, api.artistUrl, api.artistUrlPrefix)) #{fetchFromObject(artist, api.artistName)}
                                                 else
-                                                    a(href=artist.external_urls.spotify) #{artist.name}
-                div(class='col-sm-4')
-                    h3 Apple Music
-                    if apple.albums.length < 1
-                        p #{albumName} is not available on Apple Music
-                    else
-                        ul(class='list-group')
-                            each album in apple.albums
-                                li(class='list-group-item')
-                                    div(class='flex-column')
-                                        div
-                                            a(href=album.collectionViewUrl)
-                                                img(src=album.artworkUrl60 width='60px' height='60px')
-                                        div
-                                            a(href=album.collectionViewUrl) #{album.collectionName}
-                                        div artists: 
-                                            a(href=album.artistViewUrl) #{album.artistName}
-                div(class='col-sm-4')
-                    h3 Tidal
-                    if tidal.albums.length < 1
-                        p #{albumName} is not available on Spotify
-                    else
-                        ul(class='list-group') 
-                            each album in tidal.albums
-                                li(class='list-group-item')
-                                    div(class='flex-column')
-                                        div
-                                            a(href=album.url)
-                                                img(src=`https://resources.wimpmusic.com/images/${album.cover.replace(/-/g, '/')}/80x80.jpg` 
- width=60 height=60)
-                                        div 
-                                            a(href=album.url) #{album.title}
-                                        div artists: 
-                                            each artist, index in album.artists
-                                                if index > 0
-                                                    a(href=`http://www.tidal.com/artist/${artist.id}`). 
-                                                        , #{artist.name}
-                                                else
-                                                    a(href=`http://www.tidal.com/artist/${artist.id}`) #{artist.name}
+                                                    a(href=fetchUrl(album, api.artistUrl, api.artistUrlPrefix)) #{fetchFromObject(album, api.artistName)}
 include includes/foot.pug                        
