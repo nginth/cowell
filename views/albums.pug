@@ -3,12 +3,12 @@ html
         title Albums
     body
         if albums.length < 1
-            p no, ${albumName} is not available on Spotify
+            p no, #{albumName} is not available on Spotify
         else
             ul 
                 each album in albums
                     li
-                        a(href=album.external_urls.spotify)=album.name
+                        a(href=album.external_urls.spotify) #{album.name}
                         p
                             img(src=album.images[2].url width=album.images[2].width height=album.images[2].height)
                         p artists: 

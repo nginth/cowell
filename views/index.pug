@@ -1,13 +1,13 @@
 html
     head
         title= title
+        script(src='/js/jquery.js')
+        script(src='/js/inputs.js')
     body
-        p click below pls
-        a(href= loginUrl) login
         p search below pls
-        form(action='/search' method='get')
+        form(id='search-form' action='/search' method='get')
             label(for='album') album name
             input(type='text' name='album')
-            label(for='artist') album name
+            label(for='artist') artist name
             input(type='text' name='artist')
             input(type='submit' value='search')
