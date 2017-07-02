@@ -21,8 +21,12 @@ html
                                         div 
                                             a(href=album.external_urls.spotify) #{album.name}
                                         div artists: 
-                                            each artist in album.artists
-                                                a(href=artist.external_urls.spotify) #{artist.name}
+                                            each artist, index in album.artists
+                                                if index > 0
+                                                    a(href=artist.external_urls.spotify). 
+                                                        , #{artist.name}
+                                                else
+                                                    a(href=artist.external_urls.spotify) #{artist.name}
                 div(class='col-sm-4')
                     h3 Apple Music
                     if apple.albums.length < 1
@@ -37,7 +41,7 @@ html
                                                 img(src=album.artworkUrl60 width='60px' height='60px')
                                         div
                                             a(href=album.collectionViewUrl) #{album.collectionName}
-                                        div by: 
+                                        div artists: 
                                             a(href=album.artistViewUrl) #{album.artistName}
                 div(class='col-sm-4')
                     h3 Tidal
@@ -55,6 +59,10 @@ html
                                         div 
                                             a(href=album.url) #{album.title}
                                         div artists: 
-                                            each artist in album.artists
-                                                a(href=`http://www.tidal.com/artist/${artist.id}`) #{artist.name}
+                                            each artist, index in album.artists
+                                                if index > 0
+                                                    a(href=`http://www.tidal.com/artist/${artist.id}`). 
+                                                        , #{artist.name}
+                                                else
+                                                    a(href=`http://www.tidal.com/artist/${artist.id}`) #{artist.name}
 include includes/foot.pug                        
