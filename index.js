@@ -21,7 +21,6 @@ app.use(expressValidator());
 app.set('view engine', 'pug');
 
 app.get('/', (req, res) => {
-    console.log(process.env.SPOTIFY_CLIENT);
     res.render('index', {title: 'Cowell'});
 });
 
