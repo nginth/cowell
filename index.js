@@ -24,7 +24,6 @@ app.get('/', (req, res) => {
     res.render('index', {title: 'Cowell', BASE_URL: constants.BASE_URL});
 });
 
-
 app.get('/search', (req, res) => {    
     req.sanitize('album').escape();
     req.sanitize('album').trim();

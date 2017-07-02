@@ -6,7 +6,7 @@ html
         include includes/navbar.pug
         div(class='container')
             div(class='row')
-                div(class='col-sm-6')
+                div(class='col-sm-4')
                     h3 Spotify
                     if spotify.albums.length < 1
                         p #{albumName} is not available on Spotify
@@ -23,7 +23,7 @@ html
                                         div artists: 
                                             each artist in album.artists
                                                 a(href=artist.external_urls.spotify) #{artist.name}
-                div(class='col-sm-6')
+                div(class='col-sm-4')
                     h3 Apple Music
                     if apple.albums.length < 1
                         p #{albumName} is not available on Apple Music
@@ -39,4 +39,22 @@ html
                                             a(href=album.collectionViewUrl) #{album.collectionName}
                                         div by: 
                                             a(href=album.artistViewUrl) #{album.artistName}
+                div(class='col-sm-4')
+                    h3 Tidal
+                    if tidal.albums.length < 1
+                        p #{albumName} is not available on Spotify
+                    else
+                        ul(class='list-group') 
+                            each album in tidal.albums
+                                li(class='list-group-item')
+                                    div(class='flex-column')
+                                        div
+                                            a(href=album.url)
+                                                img(src=`https://resources.wimpmusic.com/images/${album.cover.replace(/-/g, '/')}/80x80.jpg` 
+ width=60 height=60)
+                                        div 
+                                            a(href=album.url) #{album.title}
+                                        div artists: 
+                                            each artist in album.artists
+                                                a(href=`http://www.tidal.com/artist/${artist.id}`) #{artist.name}
 include includes/foot.pug                        

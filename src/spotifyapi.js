@@ -4,17 +4,17 @@ var request = require('request-promise');
 function search(params, access_token, type) {
     // hack to support default params
     type = (type || 'album');
-    let qs = 'q=';
+    const qs = ['q='];
     if (params.album) {
-        qs = qs.concat(`album:${encodeQs(params.album)}`);
+        qs.push(`album:${encodeQs(params.album)}`);
     }
     if (params.artist) {
-        if (qs.slice(-1) !== '=') qs.concat('%20');
-        qs = qs.concat(`artist:${encodeQs(params.artist)}`);
+        if (qs.slice(-1) !== '=') qs.push('%20');
+        qs.push(`artist:${encodeQs(params.artist)}`);
     }
-    qs = qs.concat(`&type=${type}`);
+    qs.push(`&type=${type}`);
     const options = {
-        uri: `https://api.spotify.com/v1/search?${qs}`,
+        uri: `https://api.spotify.com/v1/search?${qs.join('')}`,
         headers: {
             'Authorization': `Bearer ${access_token}`
         },

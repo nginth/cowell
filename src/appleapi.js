@@ -2,17 +2,18 @@
 var request = require('request-promise');
 
 function search(params) {
-    let qs = 'term=';
+    const qs = []
+    qs.push('term=');
     if (params.album) {
-        qs = qs.concat(encodeQs(params.album));
+        qs.push(encodeQs(params.album));
     }
     if (params.artist) {
-        if (qs.slice(-1) !== '=') qs.concat('+');
-        qs = qs.concat(encodeQs(params.artist));
+        if (qs.slice(-1) !== '=') qs.push('+');
+        qs.push(encodeQs(params.artist));
     }
-    qs = qs.concat('&entity=album&media=music');
+    qs.push('&entity=album&media=music');
     const options = {
-        uri: `https://itunes.apple.com/search?${qs}`,
+        uri: `https://itunes.apple.com/search?${qs.join('')}`,
     }
     return request.get(options)
         .then((appleRes) => {
