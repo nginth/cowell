@@ -9,9 +9,6 @@ function handleSearch(query, access_token) {
         album: query.album,
         artist: query.artist
     }
-    const tidalParams = {
-        type: 'albums'
-    }
     return Promise.all([spotifyAPI.search(params, access_token), appleAPI.search(params), tidalAPI.search(params)])
         .then((responses) => {
             console.log(responses[2].albums.items[0]);
