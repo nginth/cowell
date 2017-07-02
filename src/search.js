@@ -1,9 +1,8 @@
 'use strict';
 var request = require('request-promise');
-var promisify = require('es6-promisify');
-var spotifyAPI = require('./spotifyapi.js');
-var appleAPI = require('./appleapi.js');
-var tidalAPI = require('./tidalapi.js');
+var spotifyAPI = require('./api/spotifyapi.js');
+var appleAPI = require('./api/appleapi.js');
+var tidalAPI = require('./api/tidalapi.js');
 
 function handleSearch(query, access_token) {
     const params = {
