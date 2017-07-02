@@ -7,11 +7,11 @@ html
             div(class='row')
                 div(class='col-sm-6')
                     h3 Spotify
-                    if albums.length < 1
+                    if spotify.albums.length < 1
                         p #{albumName} is not available on Spotify
                     else
                         ul 
-                            each album in albums
+                            each album in spotify.albums
                                 li
                                     a(href=album.external_urls.spotify) #{album.name}
                                     p
@@ -21,7 +21,17 @@ html
                                             a(href=artist.external_urls.spotify)=artist.name
                 div(class='col-sm-6')
                     h3 Apple Music
-                    p to be implemented
+                    if apple.albums.length < 1
+                        p #{albumName} is not available on Apple Music
+                    else
+                        ul 
+                            each album in apple.albums
+                                li
+                                    a(href=album.collectionViewUrl) #{album.collectionName}
+                                    p
+                                        img(src=album.artworkUrl60 width='60px' height='60px')
+                                    p artists: 
+                                        a(href=album.artistViewUrl)=album.artistName
     div
         script(src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous")
         script(src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous")
