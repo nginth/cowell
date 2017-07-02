@@ -6,6 +6,8 @@ function handleSearch(query, access_token) {
         return albumSearch(query, access_token);
     } else if (!isEmpty(query.album)) {
         return albumArtistSearch(query, access_token);
+    } else {
+        return artistSearch(query, access_token);
     }
 }
 
@@ -46,6 +48,25 @@ function albumArtistSearch(query, access_token) {
         });
 }
 
+function artistSearch(query, access_token) {
+    return Promise.all([spotifyArtistSearch(query, access_token), appleArtistSearch(query)])
+        .then((responses) => {
+            console.log(JSON.stringify(responses[1]));
+            return {
+                template: 'albums',
+                templateArgs: {
+                    albumName: query.artist,
+                    spotify: {
+                        albums: responses[0].albums.items
+                    },
+                    apple: {
+                        albums: responses[1].results
+                    }
+                }
+            }
+        });
+}
+
 function appleAlbumSearch(query) {
     const encodedAlbum = encodeQs(query.album);
     const options = {
@@ -62,6 +83,17 @@ function appleAlbumArtistSearch(query) {
     const encodedArtist = encodeQs(query.artist);
     const options = {
         uri: `https://itunes.apple.com/search?term=${encodedAlbum}+${encodedArtist}&entity=album&media=music`,
+    }
+    return request.get(options)
+        .then((appleRes) => {
+            return JSON.parse(appleRes);
+        });
+}
+
+function appleArtistSearch(query) {
+    const encodedArtist = encodeQs(query.artist);
+    const options = {
+        uri: `https://itunes.apple.com/search?term=${encodedArtist}&entity=album&media=music`,
     }
     return request.get(options)
         .then((appleRes) => {
@@ -97,6 +129,21 @@ function spotifyAlbumArtistSearch(query, access_token) {
         json: true
     }
     console.log(access_token);
+    return request.get(options);
+}
+
+function spotifyArtistSearch(query, access_token) {
+    const options = {
+        uri: 'https://api.spotify.com/v1/search',
+        qs: {
+            'q': encodeQs(query.artist),
+            'type': 'album'
+        },
+        headers: {
+            'Authorization': `Bearer ${access_token}`
+        },
+        json: true
+    }
     return request.get(options);
 }
 
