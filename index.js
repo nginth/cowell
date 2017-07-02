@@ -2,7 +2,6 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var expressValidator = require('express-validator');
-var qs = require('querystring');
 var auth = require('./src/auth.js');
 var search = require('./src/search.js');
 var error = require('./src/error.js');
