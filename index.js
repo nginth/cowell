@@ -21,12 +21,11 @@ app.use(expressValidator());
 app.set('view engine', 'pug');
 
 app.get('/', (req, res) => {
-    res.render('index', {title: 'Cowell'});
+    res.render('index', {title: 'Cowell', BASE_URL: constants.BASE_URL});
 });
 
-app.get('/search', (req, res) => {
-    req.checkQuery('album', 'Please enter an album name.').notEmpty();
-    
+
+app.get('/search', (req, res) => {    
     req.sanitize('album').escape();
     req.sanitize('album').trim();
     req.sanitize('artist').escape();
@@ -34,8 +33,15 @@ app.get('/search', (req, res) => {
 
     auth.getSpotifyToken(process.env.SPOTIFY_CLIENT, process.env.SPOTIFY_SECRET, process.env.SPOTIFY_REFRESH)
         .then(authRes => search.handleSearch(req.query, authRes.access_token))
-        .then(searchRes => res.render(searchRes.template, searchRes.templateArgs))
+        .then((searchRes) => {
+            searchRes.templateArgs.BASE_URL = constants.BASE_URL;
+            res.render(searchRes.template, searchRes.templateArgs)
+        })
         .catch(err => error.handleError(err, res));
+});
+
+app.get('/about', (req, res) => {
+    res.render('about', {BASE_URL: constants.BASE_URL});
 });
  
 app.listen(PORT, () => {

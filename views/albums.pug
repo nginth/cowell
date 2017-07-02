@@ -1,9 +1,15 @@
 html
     head
-        meta(name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1")
-        link(rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css' integrity='sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ' crossorigin='anonymous')
         title Albums
+        include includes/head.pug
     body
+        nav(class="navbar navbar-toggleable-md navbar-light bg-faded")
+              a(class="navbar-brand" href=BASE_URL) Cowell
+              div(class='collapse navbar-collapse')
+                ul(class='navbar-nav mr-auto')
+                    li(class='nav-item')
+                        a(class='nav-link' href=BASE_URL + '/about') About
+
         div(class='container')
             div(class='row')
                 div(class='col-sm-6')
@@ -11,29 +17,30 @@ html
                     if spotify.albums.length < 1
                         p #{albumName} is not available on Spotify
                     else
-                        ul 
+                        ul(class='list-group') 
                             each album in spotify.albums
-                                li
-                                    a(href=album.external_urls.spotify) #{album.name}
-                                    p
-                                        img(src=album.images[2].url width=album.images[2].width height=album.images[2].height)
-                                    p artists: 
-                                        each artist in album.artists
-                                            a(href=artist.external_urls.spotify)=artist.name
+                                li(class='list-group-item')
+                                    div(class='flex-column')
+                                        div
+                                            img(src=album.images[2].url width=album.images[2].width height=album.images[2].height)
+                                        div 
+                                            a(href=album.external_urls.spotify) #{album.name}
+                                        div artists: 
+                                            each artist in album.artists
+                                                a(href=artist.external_urls.spotify) #{artist.name}
                 div(class='col-sm-6')
                     h3 Apple Music
                     if apple.albums.length < 1
                         p #{albumName} is not available on Apple Music
                     else
-                        ul 
+                        ul(class='list-group')
                             each album in apple.albums
-                                li
-                                    a(href=album.collectionViewUrl) #{album.collectionName}
-                                    p
-                                        img(src=album.artworkUrl60 width='60px' height='60px')
-                                    p artists: 
-                                        a(href=album.artistViewUrl)=album.artistName
-script(src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous")
-script(src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous")
-script(src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous")
-                        
+                                li(class='list-group-item')
+                                    div(class='flex-column')
+                                        div
+                                            img(src=album.artworkUrl60 width='60px' height='60px')
+                                        div
+                                            a(href=album.collectionViewUrl) #{album.collectionName}
+                                        div by: 
+                                            a(href=album.artistViewUrl) #{album.artistName}
+include includes/foot.pug                        
