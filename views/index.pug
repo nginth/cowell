@@ -3,12 +3,7 @@ html
         title= title
         include includes/head.pug
     body
-        nav(class="navbar navbar-toggleable-md navbar-light bg-faded")
-              a(class="navbar-brand" href=BASE_URL) Cowell
-              div(class='collapse navbar-collapse')
-                ul(class='navbar-nav mr-auto')
-                    li(class='nav-item')
-                        a(class='nav-link' href=BASE_URL + '/about') About
+        include includes/navbar.pug
         div(class='container') 
             div(class='row') search below pls
             div(class='row')
