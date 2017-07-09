@@ -13,13 +13,15 @@
   "author": "Nick Ginther",
   "license": "ISC",
   "dependencies": {
+    "bluebird": "^3.5.0",
     "body-parser": "^1.17.2",
     "express": "^4.15.3",
     "express-validator": "^3.2.0",
     "pug": "^2.0.0-rc.2",
     "redis": "^2.7.1",
     "request": "^2.81.0",
-    "request-promise": "^4.2.1"
+    "request-promise": "^4.2.1",
+    "thenify-all": "^1.6.0"
   },
   "devDependencies": {
     "eslint": "^4.1.1",

@@ -5,8 +5,9 @@ html
     body
         include includes/navbar.pug
         div(class='container') 
-            div(class='row') search below pls
             div(class='row')
+              div(class='col-md-6')
+                h3 Search
                 form(id='search-form' action='/search' method='get')
                     div(class='form-group')
                         label(for='album') album name
@@ -15,4 +16,10 @@ html
                         label(for='artist') artist name
                         input(type='text' name='artist' class='form-control')
                     input(type='submit' value='search' class='btn btn-primary')
+              div(class='col-md-6')
+                if recentSearches
+                  h3 Recent Searches
+                  ul
+                    each search in recentSearches
+                      li #{search.artist} - #{search.album}
 include includes/foot.pug
